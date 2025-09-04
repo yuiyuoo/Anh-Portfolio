@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anh's Portfolio</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="typewriter">
+            <h1>It's Anh.</h1>
+        </div>
+        <nav>
+            <a href="#about">about me</a>
+            <a href="#projects">projects</a>
+            <a href="#contact">contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about" class="section">
+            <div class="text-orientation">About me</div>
+            <p>I’m Anh Vu, a passionate front-end developer skilled in building clean, responsive, and
+                user-friendly web interfaces. With hands-on experience in HTML, CSS, JavaScript, and React, I specialize
+                in creating websites that not only look great but also deliver smooth user experiences. I'm a fast
+                learner, a problem solver, and always eager to grow by working on real-world projects and collaborating
+                with creative teams.
+            </p>
+            <button class="button" onclick="window.open('ThiTrangAnhVu-Werkstudent-Lebenslauf.pdf', '_blank')"><span>GET RESUME</span></button>
+
+        </section>
+        <section id="projects" class="section">
+            <div class="text-orientation">Projects</div>
+            <div class="horizontal-scroll-wrapper squares">
+                <section class="slider">
+                    <button class="slider__control prev"></button>
+                    <button class="slider__control next"></button>
+                    <div class="slider__container" data-multislide="false" data-step="3">
+                        <div class="slider__item">
+                            <img src="img/image.png" alt="" width="100%">
+                            <div class="tags">
+                                <a href="https://yuiyuoo.github.io/Pomodoro-Timer/" target="_blank" class="tag">Live</a>
+                                <a href="https://github.com/yuiyuoo/Pomodoro-Timer" target="_blank" class="tag">GitHub</a>
+                            </div>
+                            <div class="tech-stack">
+                                <div class="skill">JavaScript</div>
+                                <div class="skill">HTML</div>
+                                <div class="skill">CSS</div>
+                            </div>
+
+                        </div>
+                        <div class="slider__item">
+                            <img src="img/ColorMemoryGame.png" alt="" width="100%">
+                            <div class="tags">
+                                <a href="https://yuiyuoo.github.io/Color-Memory/" target="_blank" class="tag">Live</a>
+                                <a href="https://github.com/yuiyuoo/Color-Memory" target="_blank" class="tag">GitHub</a>
+                            </div>
+                            <div class="tech-stack">
+                                <div class="skill">JavaScript</div>
+                                <div class="skill">HTML</div>
+                                <div class="skill">CSS</div>
+                            </div>
+                        </div>
+                        <div class="slider__item">
+                            <img src="https://picsum.photos/id/523/700/700" alt="" width="100%">
+                            <div class="tags">
+                                <a href="https://your-live-link.com" target="_blank" class="tag">Live</a>
+                                <a href="https://github.com/your-repo" target="_blank" class="tag">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section> 
+        <section id="contact" class="section">
+            <div class="text-orientation">Contact</div>
+
+            <form class="contact-form" id="contact-form">
+                <p>If you have any questions or concerns, please don't hesitate to contact me. I am open to any work
+                    opportunities that align with my skills and interests.</p>
+                <div class="form-group">
+                    <input type="text" name="firstName" placeholder="First Name" required>
+                    <input type="text" name="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="mail" placeholder="E-Mail" required></textarea>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+
+                <button type="submit" class="send-btn">Send Message</button>
+            </form>
+            <div class="contact-form" id="info-card">
+                <ul class="contact-list">
+                    <li>
+                        <span class="icon"><i class="fa-regular fa-envelope"></i></span>
+                        <span>vtranh6858@gmail.com</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa-solid fa-phone"></i></span>
+                        <span>+49 155 6361 7017</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+                        <span>70569 Stuttgart</span>
+                    </li>
+                </ul>
+
+                <div class="social-icons">
+                    <a href="https://github.com/yuiyuoo"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/trang-anh-vu/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://leetcode.com/u/VuTrangAnh/"><i class="fa-solid fa-code"></i></a>
+                </div> 
+            </div>
+
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init("g0LlMpSIOzOAd_pur"); // from EmailJS
+        })();
+
+        document.getElementById("contact-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            emailjs.sendForm("service_vtranh6858", "template_vtranh6858", this)
+                .then(() => {
+                    alert("Message sent successfully!");
+                }, (err) => {
+                    alert("Failed to send message. Error: " + JSON.stringify(err));
+                });
+        });
+    </script>
+    <script src="slider.js"></script>
+
+</body>
+
+</html>

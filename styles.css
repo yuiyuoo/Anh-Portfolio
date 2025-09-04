@@ -1,0 +1,457 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: white;
+}
+
+/* Header / Navbar */
+header {
+  display: flex;
+  justify-content: space-between;
+  /* pushes left + right */
+  align-items: center;
+  /* vertically centers */
+  padding: 15px 50px;
+  color: white;
+  background-color: #111;
+
+}
+
+/* Name / Logo */
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Navigation */
+nav a {
+  text-decoration: none;
+  color: white;
+  margin-left: 20px;
+  font-size: 1em;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #00bcd4;
+  /* hover effect */
+}
+
+.section {
+  display: flex;
+  text-wrap-style: balance;
+  justify-content: space-between;
+  max-width: 80%;
+  margin: 200px 50px;
+  padding: 2em;
+  font-size: 1.5em;
+
+}
+
+.text-orientation {
+  writing-mode: vertical-lr;
+  font-weight: bold;
+  font-size: 1em;
+  animation: shake 3s ease-in-out 2;
+  animation-direction: normal;
+}
+
+@keyframes shake {
+  0% {
+    transform: skewY(20deg);
+  }
+
+  50% {
+    transform: skewY(10deg);
+  }
+
+  100% {
+    transform: skewY(0deg);
+  }
+}
+
+p {
+  margin-top: 1em;
+  padding: 0 3em;
+}
+
+/* project cards */
+.slider {
+  position: relative;
+  padding: 2em;
+}
+
+.slider__container {
+  cursor: grab;
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.slider__container.dragging {
+  scroll-behavior: auto;
+  cursor: grabbing;
+}
+
+
+.slider__item {
+  position: relative;
+}
+
+.tags {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transition: .5s ease;
+  opacity: 0;
+}
+
+@keyframes swing-in-top-fwd {
+  0% {
+    -webkit-transform: rotateX(-100deg);
+    transform: rotateX(-100deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+
+.slider__item:hover .tags {
+  opacity: 0.8;
+}
+
+.slider__item {
+  margin: 0 1.5em;
+  flex: 0 0 auto;
+  width: calc(100% / 3);
+}
+
+.slider__container[data-step="2"] .slider__item {
+  width: calc(100% / 2);
+}
+
+.slider__container[data-step="1"] .slider__item {
+  width: calc(100% / 1);
+}
+
+@media screen and (max-width: 1024px) {
+
+  .slider__item,
+  .slider__container[data-step="4"] .slider__item {
+    width: calc(100% / 3);
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .slider__item,
+  .slider__container[data-step="4"] .slider__item,
+  .slider__container[data-step="3"] .slider__item {
+    width: calc(100% / 2);
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .slider__item,
+  .slider__container[data-step="4"] .slider__item,
+  .slider__container[data-step="3"] .slider__item,
+  .slider__container[data-step="2"] .slider__item {
+    width: calc(100% / 1);
+  }
+}
+
+.slider__control {
+  font-size: 16px;
+  border: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #000;
+  background: #fff;
+  cursor: pointer;
+  opacity: .5;
+  transition: all .3s;
+}
+
+.slider__control.prev {
+  left: 10px;
+}
+
+#about {
+  color: #111;
+}
+.slider__control.next {
+  right: 10px;
+}
+
+.slider__control:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.2);
+}
+
+.slider__item img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+}
+
+/* for tech stack*/
+.tags {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  background-color: #000;
+}
+
+
+.tag {
+  outline: 1px solid white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  transition: 250ms ease;
+  text-decoration: none;
+  color: white;
+}
+
+.tag:hover {
+  background: rgb(255, 255, 255);
+  color: hsl(0, 0%, 2%);
+}
+
+.tech-stack {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skill {
+  font-family: monospace;
+  font-size: 0.8em;
+  border: 0.5px;
+  border-style: solid;
+  border-color: #fff;
+  box-shadow: inset;
+  border-radius: 10px;
+  margin: 0.5em 0.5em;
+  padding: 0 0.5em;
+}
+
+
+button {
+  border-radius: 10px;
+  height: 5em;
+  width: 35em;
+  margin-top: 2em;
+  border-color: none;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-right: 2em;
+}
+
+
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.contact-form {
+  margin: 2em 2em;
+  align-items: center;
+  max-width: 600px;
+  padding: 2em;
+  background: #111;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.contact-form p {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.contact-form textarea {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.contact-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+  outline: none;
+}
+
+.contact-form textarea {
+  resize: none;
+  width: 100%;
+}
+
+.send-btn {
+  margin: 0 auto;
+  width: 50%;
+  padding: 12px;
+  background: #374151;
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.send-btn:hover {
+  background: #2563eb;
+}
+
+#info-card {
+  display: flex;
+  flex-direction: column;
+  margin: auto auto;
+  color: #e5e7eb;
+  max-width: 400px;
+  border-radius: 12px;
+  width: 75%;
+  align-items: center;
+  padding: 20px;
+  background: #111;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: auto auto;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #374151;
+  font-size: 16px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #374151;
+  color: #e5e7eb;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: background 0.3s;
+    text-decoration: none ;
+
+}
+
+.social-icons a:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+.typewriter h1 {
+  color: #fff;
+  font-family: monospace;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
