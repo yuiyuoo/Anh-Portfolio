@@ -263,12 +263,16 @@
       {
         title: "Pomodoro Timer",
         description: "A productivity app with task management",
-        image: "img/image.png"
+        image: "img/image.png",
+        liveUrl: "https://yuiyuoo.github.io/Pomodoro-Timer/",
+        githubUrl: "https://github.com/yuiyuoo/Pomodoro-Timer"
       },
       {
         title: "Color Memory Game",
         description: "Interactive memory game with animations",
-        image: "img/ColorMemoryGame.png"
+        image: "img/ColorMemoryGame.png",
+        liveUrl: "https://yuiyuoo.github.io/Color-Memory/",
+        githubUrl: "https://github.com/yuiyuoo/Color-Memory"
       }
     ];
 
@@ -287,6 +291,10 @@
           </div>
           <h3 class="text-xl font-semibold mb-2">${project.title}</h3>
           <p class="text-muted-foreground text-sm">${project.description}</p>
+          <div class="mt-4 flex gap-4">
+            <a href="${project.liveUrl}" target="_blank" class="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 text-sm transition">Live</a>
+            <a href="${project.githubUrl}" target="_blank" class="bg-muted text-muted-foreground px-4 py-2 rounded-lg hover:bg-muted/90 text-sm transition">GitHub</a>
+          </div>
         `;
         carousel.appendChild(card);
 
