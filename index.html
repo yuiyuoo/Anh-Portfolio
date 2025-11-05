@@ -1,126 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anh's Portfolio</title>
-    <link href="styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anh's Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: oklch(1 0 0);
+      --foreground: oklch(0.145 0 0);
+      --card: oklch(1 0 0);
+      --card-foreground: oklch(0.145 0 0);
+      --primary: oklch(0.205 0 0);
+      --primary-foreground: oklch(0.985 0 0);
+      --secondary: oklch(0.97 0 0);
+      --secondary-foreground: oklch(0.205 0 0);
+      --muted: oklch(0.97 0 0);
+      --muted-foreground: oklch(0.556 0 0);
+      --border: oklch(0.922 0 0);
+      --radius: 0.625rem;
+    }
+
+    * {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: rgb(from var(--background) r g b);
+      color: rgb(from var(--foreground) r g b);
+    }
+
+    .smooth-scroll {
+      scroll-behavior: smooth;
+    }
+
+    .nav-link.active {
+      border-bottom: 2px solid rgb(from var(--primary) r g b);
+    }
+
+    .carousel-container {
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .carousel-container.dragging {
+      cursor: grabbing;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .carousel-container::-webkit-scrollbar-track {
+      background: rgb(from var(--border) r g b);
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background: rgb(from var(--muted-foreground) r g b);
+      border-radius: 3px;
+    }
+
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex: 0 0 100%;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 768px) {
+      .project-card {
+        flex: 0 0 48%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .project-card {
+        flex: 0 0 32%;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    input, textarea {
+      border-color: rgb(from var(--border) r g b);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: rgb(from var(--primary) r g b);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .error-text {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 4px;
+    }
+
+    .success-text {
+      color: #16a34a;
+    }
+
+    button {
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
 </head>
+<body class="smooth-scroll bg-background text-foreground">
 
-<body>
+  <!-- Header/Navigation -->
+  <header class="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold">Anh</div>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex gap-8 items-center">
+        <a href="#about" class="nav-link active pb-2 text-sm hover:text-muted-foreground transition">About Me</a>
+        <a href="#projects" class="nav-link pb-2 text-sm hover:text-muted-foreground transition">Projects</a>
+        <a href="#contact" class="nav-link pb-2 text-sm hover:text-muted-foreground transition">Contact</a>
+      </div>
 
-    <header>
-        <div class="typewriter">
-            <h1>It's Anh.</h1>
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-2xl">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-border">
+      <div class="px-4 py-3 flex flex-col gap-3">
+        <a href="#about" class="text-sm hover:text-muted-foreground">About Me</a>
+        <a href="#projects" class="text-sm hover:text-muted-foreground">Projects</a>
+        <a href="#contact" class="text-sm hover:text-muted-foreground">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 fade-in">Hi, I'm Anh</h1>
+      <p class="text-lg text-muted-foreground mb-8 fade-in leading-relaxed">
+        A passionate full-stack developer crafting digital experiences with modern technologies. I specialize in building responsive web applications and bringing ideas to life through code.
+      </p>
+      <button id="resumeBtn" class="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary/90 fade-in">
+        Download Resume
+      </button>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="bg-secondary py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">Projects</h2>
+
+      <!-- Carousel Controls -->
+      <div class="flex gap-3 mb-6 items-center">
+        <button id="prevBtn" class="bg-primary text-primary-foreground p-2 rounded-lg hover:bg-primary/90 hidden">
+          
+        </button>
+        <span class="text-sm text-muted-foreground hidden"></span>
+        <button id="nextBtn" class="bg-primary text-primary-foreground p-2 rounded-lg hover:bg-primary/90 hidden">
+          
+        </button>
+      </div>
+
+      <!-- Project Carousel -->
+      <div id="carousel" class="carousel-container flex gap-6 pb-4">
+        <!-- Projects will be inserted here by JavaScript -->
+      </div>
+
+      <!-- Indicators -->
+      <div id="indicators" class="flex gap-2 mt-6 justify-center hidden">
+        <!-- Indicators will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+    <h2 class="text-3xl md:text-4xl font-bold mb-12">Get In Touch</h2>
+
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Contact Info -->
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-2"><a href="mailto:vtranh6858@gmail.com">Email</a></h3>
         </div>
-        <nav>
-            <a href="#about">about me</a>
-            <a href="#projects">projects</a>
-            <a href="#contact">contact</a>
-        </nav>
-    </header>
+        <div>
+          <h3 class="text-lg font-semibold mb-2"><a href="https://www.linkedin.com/in/trang-anh-vu/">LinkedIn</a></h3>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2"><a href="https://github.com/yuiyuoo">GitHub</a></h3>
+        </div>
+      </div>
 
-    <main>
-        <section id="about" class="section">
-            <div class="text-orientation">About me</div>
-            <p>I’m Anh Vu, a passionate front-end developer skilled in building clean, responsive, and
-                user-friendly web interfaces. With hands-on experience in HTML, CSS, JavaScript, and React, I specialize
-                in creating websites that not only look great but also deliver smooth user experiences. I'm a fast
-                learner, a problem solver, and always eager to grow by working on real-world projects and collaborating
-                with creative teams.
-            </p>
-            <button class="button" onclick="window.open('ThiTrangAnhVu-Werkstudent-Lebenslauf.pdf', '_blank')"><span>GET RESUME</span></button>
+      <!-- Contact Form -->
+      <form id="contactForm" class="space-y-6">
+        <div>
+          <label class="block text-sm font-medium mb-2">Name</label>
+          <input type="text" id="name" placeholder="Your name" class="w-full px-4 py-2 border rounded-lg bg-background" required>
+          <div id="nameError" class="error-text"></div>
+        </div>
 
-        </section>
-        <section id="projects" class="section">
-            <div class="text-orientation">Projects</div>
-            <div class="horizontal-scroll-wrapper squares">
-                <section class="slider">
-                    <button class="slider__control prev"></button>
-                    <button class="slider__control next"></button>
-                    <div class="slider__container" data-multislide="false" data-step="3">
-                        <div class="slider__item">
-                            <img src="img/image.png" alt="" width="100%">
-                            <div class="tags">
-                                <a href="https://yuiyuoo.github.io/Pomodoro-Timer/" target="_blank" class="tag">Live</a>
-                                <a href="https://github.com/yuiyuoo/Pomodoro-Timer" target="_blank" class="tag">GitHub</a>
-                            </div>
-                            <div class="tech-stack">
-                                <div class="skill">JavaScript</div>
-                                <div class="skill">HTML</div>
-                                <div class="skill">CSS</div>
-                            </div>
+        <div>
+          <label class="block text-sm font-medium mb-2">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" class="w-full px-4 py-2 border rounded-lg bg-background" required>
+          <div id="emailError" class="error-text"></div>
+        </div>
 
-                        </div>
-                        <div class="slider__item">
-                            <img src="img/ColorMemoryGame.png" alt="" width="100%">
-                            <div class="tags">
-                                <a href="https://yuiyuoo.github.io/Color-Memory/" target="_blank" class="tag">Live</a>
-                                <a href="https://github.com/yuiyuoo/Color-Memory" target="_blank" class="tag">GitHub</a>
-                            </div>
-                            <div class="tech-stack">
-                                <div class="skill">JavaScript</div>
-                                <div class="skill">HTML</div>
-                                <div class="skill">CSS</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section> 
-        <section id="contact" class="section">
-            <div class="text-orientation">Contact</div>
+        <div>
+          <label class="block text-sm font-medium mb-2">Message</label>
+          <textarea id="message" placeholder="Your message..." class="w-full px-4 py-2 border rounded-lg bg-background h-32 resize-none" required></textarea>
+          <div id="messageError" class="error-text"></div>
+        </div>
 
-            <form class="contact-form" id="contact-form">
-                <p>If you have any questions or concerns, please don't hesitate to contact me. I am open to any work
-                    opportunities that align with my skills and interests.</p>
-                <div class="form-group">
-                    <input type="text" name="firstName" placeholder="First Name" required>
-                    <input type="text" name="lastName" placeholder="Last Name" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="mail" placeholder="E-Mail" required></textarea>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                </div>
+        <button type="submit" class="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90">
+          Send Message
+        </button>
+        <div id="formStatus" class="text-center"></div>
+      </form>
+    </div>
+  </section>
 
-                <button type="submit" class="send-btn">Send Message</button>
-            </form>
-            <div class="contact-form" id="info-card">
-                <ul class="contact-list">
-                    <li>
-                        <span class="icon"><i class="fa-regular fa-envelope"></i></span>
-                        <span>vtranh6858@gmail.com</span>
-                    </li>
-                    <li>
-                        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-                        <span>+49 155 6361 7017</span>
-                    </li>
-                    <li>
-                        <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
-                        <span>70569 Stuttgart</span>
-                    </li>
-                </ul>
+  <!-- Footer -->
+  <footer class="bg-secondary text-center py-8">
+    <p class="text-muted-foreground text-sm">© 2025 Anh. All rights reserved.</p>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-                <div class="social-icons">
-                    <a href="https://github.com/yuiyuoo"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/trang-anh-vu/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://leetcode.com/u/VuTrangAnh/"><i class="fa-solid fa-code"></i></a>
-                </div> 
-            </div>
+  <script>
+    // Projects data
+    const projects = [
+      {
+        title: "Pomodoro Timer",
+        description: "A productivity app with task management",
+        image: "img/image.png"
+      },
+      {
+        title: "Color Memory Game",
+        description: "Interactive memory game with animations",
+        image: "img/ColorMemoryGame.png"
+      }
+    ];
 
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        (function () {
+    // Initialize carousel
+    function initCarousel() {
+      const carousel = document.getElementById('carousel');
+      const indicators = document.getElementById('indicators');
+
+      // Render projects
+      projects.forEach((project, index) => {
+        const card = document.createElement('div');
+        card.className = 'project-card bg-background rounded-lg border border-border p-6 shadow-sm';
+        card.innerHTML = `
+          <div class="mb-4 bg-muted rounded-lg h-40 overflow-hidden">
+            <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-semibold mb-2">${project.title}</h3>
+          <p class="text-muted-foreground text-sm">${project.description}</p>
+        `;
+        carousel.appendChild(card);
+
+        // Create indicator
+        const indicator = document.createElement('button');
+        indicator.className = 'w-2 h-2 rounded-full bg-muted-foreground transition';
+        indicator.addEventListener('click', () => scrollToProject(index));
+        indicators.appendChild(indicator);
+      });
+
+      updateIndicators();
+    }
+
+    // Carousel drag functionality
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const carousel = document.getElementById('carousel');
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.classList.add('dragging');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+      isDown = false;
+      carousel.classList.remove('dragging');
+    });
+
+    carousel.addEventListener('mouseup', () => {
+      isDown = false;
+      carousel.classList.remove('dragging');
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch support for mobile
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    // Arrow button navigation
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      const card = carousel.querySelector('.project-card');
+      carousel.scrollLeft += card.offsetWidth + 24;
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      const card = carousel.querySelector('.project-card');
+      carousel.scrollLeft -= card.offsetWidth + 24;
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        const card = carousel.querySelector('.project-card');
+        carousel.scrollLeft += card.offsetWidth + 24;
+      } else if (e.key === 'ArrowLeft') {
+        const card = carousel.querySelector('.project-card');
+        carousel.scrollLeft -= card.offsetWidth + 24;
+      }
+    });
+
+    function scrollToProject(index) {
+      const card = carousel.querySelector('.project-card');
+      carousel.scrollLeft = (card.offsetWidth + 24) * index;
+    }
+
+    function updateIndicators() {
+      const indicators = document.querySelectorAll('#indicators button');
+      const card = carousel.querySelector('.project-card');
+      const scrollPosition = carousel.scrollLeft + carousel.offsetWidth / 2;
+      const activeIndex = Math.round(carousel.scrollLeft / (card.offsetWidth + 24));
+
+      indicators.forEach((indicator, index) => {
+        if (index === activeIndex) {
+          indicator.style.backgroundColor = 'rgb(from var(--primary) r g b)';
+        } else {
+          indicator.style.backgroundColor = 'rgb(from var(--muted-foreground) r g b)';
+        }
+      });
+    }
+
+    carousel.addEventListener('scroll', updateIndicators);
+
+    // Active section detection
+    function updateActiveNav() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      let currentSection = '';
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2) {
+          currentSection = section.id;
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
+
+    // Form validation and submission
+    const contactForm = document.getElementById('contactForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+
+    function validateForm() {
+      let isValid = true;
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const messageError = document.getElementById('messageError');
+
+      nameError.textContent = '';
+      emailError.textContent = '';
+      messageError.textContent = '';
+
+      if (!nameInput.value.trim()) {
+        nameError.textContent = 'Name is required';
+        isValid = false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'Valid email is required';
+        isValid = false;
+      }
+
+      if (!messageInput.value.trim()) {
+        messageError.textContent = 'Message is required';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+
+
+    // Real-time validation
+    nameInput.addEventListener('blur', () => {
+      const nameError = document.getElementById('nameError');
+      if (!nameInput.value.trim()) {
+        nameError.textContent = 'Name is required';
+      } else {
+        nameError.textContent = '';
+      }
+    });
+
+    emailInput.addEventListener('blur', () => {
+      const emailError = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'Valid email is required';
+      } else {
+        emailError.textContent = '';
+      }
+    });
+
+    messageInput.addEventListener('blur', () => {
+      const messageError = document.getElementById('messageError');
+      if (!messageInput.value.trim()) {
+        messageError.textContent = 'Message is required';
+      } else {
+        messageError.textContent = '';
+      }
+    });
+
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.add('hidden');
+      });
+    });
+
+    // Resume button
+    document.getElementById('resumeBtn').addEventListener('click', () => {
+      window.open('ThiTrangAnhVu-Werkstudent-Lebenslauf.pdf', '_blank')    
+    });
+
+    (function () {
             emailjs.init("g0LlMpSIOzOAd_pur"); // from EmailJS
         })();
 
-        document.getElementById("contact-form").addEventListener("submit", function (e) {
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
             emailjs.sendForm("service_vtranh6858", "template_vtranh6858", this)
@@ -130,9 +510,8 @@
                     alert("Failed to send message. Error: " + JSON.stringify(err));
                 });
         });
-    </script>
-    <script src="slider.js"></script>
-
+    // Initialize
+    initCarousel();
+  </script>
 </body>
-
 </html>
